@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Портфолио и заказ монтажа: от 200 ₽, с 3D-анимацией и нейросетями от 350 ₽.">
+<style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Maxim Bodycam</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: cinematic night-reel — kinetic hero with a 3D ring of live clips, then a tilt-card grid, skills, tools ticker, contact. Single dark look by choice. */
+:root{
+  --ink:#06060A;        /* page ground */
+  --panel:#101018;      /* raised surfaces */
+  --line:rgba(236,232,255,.12);
+  --fg:#F1EEF8;         /* text */
+  --mute:#9C97B0;       /* secondary text */
+  --hot:#FF3D6E;        /* DJI-sunset magenta */
+  --ice:#5B8CFF;        /* BMW-night blue */
+  --amber:#FFB547;      /* engine glow */
+  --display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --body:"Manrope","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+.modal[hidden]{display:none}
+body{background:var(--ink);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+a{color:inherit}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));max-width:1280px;margin:0 auto}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.grain{position:fixed;inset:-50%;z-index:1;pointer-events:none;opacity:.07;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");animation:grain 1.2s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
+main,header,footer{position:relative;z-index:2}
+
+/* nav */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:rgba(6,6,10,.55);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
+.brand{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:.04em;text-decoration:none;display:flex;align-items:center;gap:10px}
+.rec{width:10px;height:10px;border-radius:50%;background:var(--hot);box-shadow:0 0 12px var(--hot);animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.25}}
+.navlinks{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.navlinks a,.snd{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;padding:8px 12px;border-radius:999px;border:1px solid transparent;color:var(--mute);background:none;cursor:pointer}
+.navlinks a:hover,.snd:hover{color:var(--fg);border-color:var(--line)}
+.snd{border-color:var(--line);color:var(--fg);display:flex;gap:8px;align-items:center}
+.snd .bars{display:inline-flex;gap:2px;align-items:flex-end;height:12px}
+.snd .bars i{width:2px;background:var(--hot);height:3px;transition:height .2s}
+.snd.on .bars i{animation:eq .8s infinite ease-in-out}
+.snd.on .bars i:nth-child(2){animation-delay:.2s}.snd.on .bars i:nth-child(3){animation-delay:.4s}
+@keyframes eq{0%,100%{height:3px}50%{height:12px}}
+@media (max-width:640px){.navlinks a{display:none}}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:24px;align-items:center;padding-block:56px 40px}
+.hero>*{min-width:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);display:flex;gap:10px;align-items:center}
+.eyebrow b{color:var(--fg);font-weight:600}
+h1{font-family:var(--display);font-weight:900;line-height:.86;letter-spacing:-.02em;margin:18px 0 22px;font-size:clamp(50px,8.4vw,124px);text-wrap:balance}
+h1 .l{display:block;overflow:hidden}
+h1 .l span{display:inline-block;animation:rise 1s cubic-bezier(.2,.8,.2,1) both}
+h1 .l:nth-child(2) span{animation-delay:.12s}
+h1 .out{color:transparent;-webkit-text-stroke:2px var(--fg);background:linear-gradient(100deg,var(--hot),var(--amber) 45%,var(--ice));-webkit-background-clip:text;background-clip:text;background-size:200% 100%;animation:rise 1s .12s cubic-bezier(.2,.8,.2,1) both,shine 6s linear infinite}
+h1 .out:hover{color:transparent;-webkit-text-fill-color:transparent}
+@keyframes rise{from{transform:translateY(40%) skewY(6deg);opacity:.2}to{transform:none;opacity:1}}
+@keyframes shine{to{background-position:-200% 0}}
+.lead{font-size:clamp(17px,1.6vw,20px);color:var(--mute);max-width:34ch;margin:0 0 28px}
+.lead strong{color:var(--fg);font-weight:700}
+.ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn{font-family:var(--display);font-weight:600;font-size:14px;letter-spacing:.02em;text-decoration:none;padding:16px 22px;border-radius:14px;border:1px solid var(--line);background:var(--panel);display:inline-flex;gap:10px;align-items:center;position:relative;overflow:hidden;cursor:pointer;color:var(--fg);transition:transform .25s}
+.btn.main{background:linear-gradient(110deg,var(--hot),#C63BFF 55%,var(--ice));border:0;color:#fff;box-shadow:0 10px 40px -10px rgba(255,61,110,.6)}
+.btn:hover{transform:translateY(-3px)}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-120%);transition:transform .6s}
+.btn:hover::after{transform:translateX(120%)}
+.btn:focus-visible,.card:focus-visible,.snd:focus-visible,.navlinks a:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+
+/* 3D ring */
+.stage{height:min(620px,78vw);min-height:420px;perspective:1100px;position:relative;cursor:grab;touch-action:pan-y;user-select:none}
+.stage:active{cursor:grabbing}
+.ring{position:absolute;left:50%;top:46%;width:0;height:0;transform-style:preserve-3d}
+.ring .it{position:absolute;width:var(--cw);height:calc(var(--cw)*16/9);left:calc(var(--cw)/-2);top:calc(var(--cw)*-8/9);border-radius:22px;overflow:hidden;background:#000;border:1px solid rgba(255,255,255,.18);box-shadow:0 30px 60px -20px rgba(0,0,0,.8);-webkit-box-reflect:below 14px linear-gradient(transparent 70%,rgba(255,255,255,.18))}
+.ring .it video,.ring .it img{width:100%;height:100%;object-fit:cover;display:block}
+.ring .it span{position:absolute;left:10px;bottom:10px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:rgba(0,0,0,.55);padding:4px 8px;border-radius:6px}
+.stage{--cw:clamp(130px,16vw,190px)}
+.floorwrap{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.floor{position:absolute;left:-20%;right:-20%;bottom:-6%;height:46%;transform:perspective(500px) rotateX(62deg);transform-origin:bottom;background-image:linear-gradient(rgba(91,140,255,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(91,140,255,.35) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to top,#000 10%,transparent 85%);-webkit-mask-image:linear-gradient(to top,#000 10%,transparent 85%);animation:floor 3s linear infinite}
+@keyframes floor{to{background-position:0 48px}}
+.hint{position:absolute;right:0;bottom:4px;font-family:var(--mono);font-size:11px;color:var(--mute);letter-spacing:.1em;text-transform:uppercase}
+@media (max-width:860px){.hero{grid-template-columns:1fr;padding-block:32px 8px}.stage{height:500px}}
+
+/* ticker */
+.ribbons{position:relative;height:170px;margin-block:10px 40px;overflow:hidden}
+.rib{position:absolute;left:-5%;right:-5%;top:50%;padding-block:14px;white-space:nowrap;display:flex;font-family:var(--display);font-weight:800;font-size:clamp(22px,3vw,34px);letter-spacing:.02em}
+.rib.a{background:var(--hot);color:#0A0A10;transform:translateY(-60%) rotate(-4deg)}
+.rib.b{background:var(--panel);color:var(--fg);border-block:1px solid var(--line);transform:translateY(-40%) rotate(3deg)}
+.rib .tr{display:flex;gap:28px;padding-right:28px;animation:mq 22s linear infinite}
+.rib.b .tr{animation-direction:reverse;animation-duration:28s}
+.rib .tr em{font-style:normal;opacity:.55}
+@keyframes mq{to{transform:translateX(-100%)}}
+
+/* sections */
+section{padding-block:56px}
+.sh{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(34px,5.4vw,72px);line-height:.95;margin:8px 0 0;letter-spacing:-.02em;text-wrap:balance}
+h2 .g{background:linear-gradient(100deg,var(--hot),var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sh p{color:var(--mute);max-width:40ch;margin:0}
+
+/* works */
+.works{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;perspective:1200px}
+@media (max-width:1100px){.works{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding-block:6px 14px;scrollbar-width:none}.works::-webkit-scrollbar{display:none}.works .card{flex:0 0 clamp(200px,58vw,300px);scroll-snap-align:center}}
+.card{position:relative;aspect-ratio:9/16;max-width:100%;border-radius:20px;overflow:hidden;background:#000;border:1px solid var(--line);cursor:pointer;transform-style:preserve-3d;transition:transform .15s ease-out,box-shadow .3s;outline:none}
+.card:hover{box-shadow:0 30px 70px -20px rgba(255,61,110,.45)}
+.card img,.card video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card video{opacity:0;transition:opacity .3s}
+.card.play video{opacity:1}
+.card .glare{position:absolute;inset:0;background:radial-gradient(circle at var(--gx,50%) var(--gy,0%),rgba(255,255,255,.28),transparent 45%);mix-blend-mode:overlay;pointer-events:none}
+.card .meta{position:absolute;left:0;right:0;bottom:0;padding:44px 14px 14px;background:linear-gradient(transparent,rgba(0,0,0,.85));transform:translateZ(40px)}
+.card .tag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber)}
+.card h3{font-family:var(--display);font-weight:700;font-size:clamp(14px,1.3vw,17px);line-height:1.15;margin:6px 0 0}
+.card .dur{position:absolute;top:12px;right:12px;font-family:var(--mono);font-size:11px;background:rgba(0,0,0,.6);padding:4px 8px;border-radius:6px;font-variant-numeric:tabular-nums;transform:translateZ(30px)}
+.card .pl{position:absolute;top:50%;left:50%;width:62px;height:62px;margin:-31px;border-radius:50%;background:rgba(255,255,255,.14);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.35);display:grid;place-items:center;transform:translateZ(50px) scale(.9);opacity:.9;transition:transform .3s}
+.card:hover .pl{transform:translateZ(60px) scale(1.08)}
+.card .pl::before{content:"";border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:5px}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+@media (max-width:900px){.skills{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.skills{grid-template-columns:1fr}}
+.sk{background:var(--ink);padding:26px 22px 28px;position:relative;overflow:hidden;min-width:0}
+.sk::before{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(var(--c),transparent 65%);opacity:.0;top:-80px;right:-80px;transition:opacity .4s}
+.sk:hover::before{opacity:.55}
+.sk .ic{width:54px;height:54px;border-radius:14px;display:grid;place-items:center;background:var(--panel);border:1px solid var(--line);margin-bottom:22px}
+.sk .ic svg{width:28px;height:28px}
+.sk h3{font-family:var(--display);font-size:19px;font-weight:700;margin:0 0 8px}
+.sk p{color:var(--mute);margin:0;font-size:15px}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:18px}
+@media (max-width:700px){.stats{grid-template-columns:1fr}}
+.st{border:1px solid var(--line);border-radius:22px;padding:24px;background:linear-gradient(160deg,rgba(255,255,255,.04),transparent)}
+.st .n{font-family:var(--display);font-weight:900;font-size:clamp(40px,5vw,64px);line-height:1;font-variant-numeric:tabular-nums;background:linear-gradient(100deg,var(--fg),var(--ice));-webkit-background-clip:text;background-clip:text;color:transparent}
+.st .d{color:var(--mute);margin-top:8px;font-size:15px}
+
+/* tools */
+.tools{display:flex;flex-wrap:wrap;gap:10px}
+.tool{font-family:var(--mono);font-size:14px;padding:12px 16px;border-radius:12px;border:1px solid var(--line);background:var(--panel);display:flex;align-items:center;gap:10px;transition:transform .25s,border-color .25s}
+.tool:hover{transform:translateY(-4px) rotate(-1.5deg);border-color:var(--hot)}
+.tool i{width:8px;height:8px;border-radius:2px;background:var(--c,var(--ice));transform:rotate(45deg)}
+.tool small{color:var(--mute);font-size:11px}
+.tgroup{display:grid;grid-template-columns:200px 1fr;gap:16px;padding-block:18px;border-top:1px solid var(--line)}
+.tgroup>*{min-width:0}
+.tgroup h3{font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:12px 0 0}
+@media (max-width:700px){.tgroup{grid-template-columns:1fr;gap:6px}}
+
+/* contact */
+.contact{text-align:left;border-radius:32px;padding:clamp(28px,6vw,72px);position:relative;overflow:hidden;background:radial-gradient(120% 140% at 0% 0%,rgba(255,61,110,.35),transparent 55%),radial-gradient(120% 140% at 100% 100%,rgba(91,140,255,.35),transparent 55%),var(--panel);border:1px solid var(--line)}
+.contact h2{font-size:clamp(36px,7vw,96px)}
+.contact p{color:var(--mute);max-width:44ch;font-size:18px}
+.handle{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:26px}
+.handle code{font-family:var(--mono);font-size:16px;padding:14px 16px;border-radius:12px;background:rgba(0,0,0,.4);border:1px solid var(--line);user-select:all}
+footer{padding-block:28px 40px;color:var(--mute);font-family:var(--mono);font-size:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:100;background:rgba(3,3,6,.86);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);display:grid;place-items:center;padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.modal .box{position:relative;height:min(86vh,860px);aspect-ratio:9/16;max-width:100%;border-radius:24px;overflow:hidden;background:#000;box-shadow:0 0 0 1px var(--line),0 40px 120px -30px rgba(255,61,110,.5);animation:pop .45s cubic-bezier(.2,1.3,.4,1)}
+@keyframes pop{from{transform:scale(.85) rotateX(14deg);opacity:0}}
+.modal video{width:100%;height:100%;object-fit:contain;background:#000}
+.mbar{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:max(14px,env(safe-area-inset-right,0px));display:flex;gap:8px}
+.mbar button{width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--fg);font-size:20px;cursor:pointer}
+.mcap{position:absolute;left:max(16px,env(safe-area-inset-left,0px));top:calc(18px + env(safe-area-inset-top,0px));font-family:var(--display);font-weight:700;font-size:16px;max-width:60vw}
+.mcap small{display:block;font-family:var(--mono);font-weight:400;font-size:11px;color:var(--amber);letter-spacing:.12em;text-transform:uppercase}
+
+.cursor{position:fixed;left:0;top:0;width:360px;height:360px;margin:-180px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(rgba(255,61,110,.16),transparent 60%);transition:opacity .3s}
+@media (hover:none){.cursor{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* Цены и заявка */
+#prices .scene { position: relative; aspect-ratio: 16/9; overflow: hidden; border-radius: 22px; container-type: inline-size; isolation: isolate; border: 1px solid var(--line); margin-bottom: 18px; }
+.bgi { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.lay { position: absolute; inset: 0; pointer-events: none; }
+.lay img { position: absolute; display: block; height: auto; max-width: none; }
+.cf { animation: cubeF 6s ease-in-out infinite; } @keyframes cubeF { 50% { transform: translateY(-3.5%) rotate(5deg); } }
+.ff { animation: filmF 7s ease-in-out infinite; } @keyframes filmF { 50% { transform: translate(1.5%, -4%) rotate(-3deg); } }
+.nf { animation: netF 5s ease-in-out infinite; } @keyframes netF { 50% { transform: translateY(3%) scale(1.03); } }
+.pf { animation: playF 3.2s ease-in-out infinite; } @keyframes playF { 50% { transform: translateY(-5%) scale(1.06) rotate(-3deg); } }
+.tf { animation: tlF 8s ease-in-out infinite; } @keyframes tlF { 50% { transform: translateY(-1.5%); } }
+.sc { animation: scrub 8s ease-in-out infinite alternate; } @keyframes scrub { from { transform: rotate(-3deg) translateX(-25cqw) rotate(3deg); } to { transform: rotate(-3deg) translateX(17cqw) rotate(3deg); } }
+.bl { animation: blink 1.4s steps(2, jump-none) infinite; }
+.tw { animation: blink 3s ease-in-out infinite; }
+.cam { animation: camF 9s ease-in-out infinite; } @keyframes camF { 50% { transform: translateY(-.8%) rotate(.4deg); } }
+.plans { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
+@media (min-width: 720px) { .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.plan { display: flex; flex-direction: column; gap: 18px; padding: 24px; background: var(--panel); border: 1px solid var(--line); border-top: 6px solid var(--c); border-radius: 22px; transition: transform .22s cubic-bezier(.2, .8, .2, 1), box-shadow .22s; }
+.plan:hover { transform: translateY(-6px); box-shadow: 0 16px 44px -14px var(--c); }
+.plan h3 { margin: 0; font: 700 20px/1.15 var(--display); }
+.price { font: 800 clamp(42px, 6vw, 58px)/1 var(--display); letter-spacing: -.03em; color: var(--c); font-variant-numeric: tabular-nums; }
+.price small { font: 400 14px/1 var(--mono); letter-spacing: 0; color: var(--mute); margin-left: 8px; white-space: nowrap; }
+.plan ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; flex: 1; }
+.plan li { display: flex; gap: 10px; }
+.plan li::before { content: "+"; flex: none; width: 1.1em; font: 600 16px/1.55 var(--mono); color: #5BE0A0; }
+.plan li.no { color: var(--mute); }
+.plan li.no::before { content: "–"; color: var(--mute); }
+.pick { min-height: 52px; background: var(--c); color: #0A0A10; border: 0; border-radius: 14px; font: 600 14px/1 var(--display); cursor: pointer; transition: transform .15s; }
+.pick:hover, .send:hover:not(:disabled) { transform: translateY(-2px); }
+.flow { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1px; margin: 18px 0; padding: 0; list-style: none; counter-reset: s; background: var(--line); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; }
+@media (min-width: 720px) { .flow { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.flow li { padding: 18px 20px; background: var(--ink); display: grid; align-content: start; gap: 4px; counter-increment: s; }
+.flow li::before { content: "ШАГ " counter(s); font: 600 12px/1.4 var(--mono); letter-spacing: .1em; color: var(--amber); }
+.flow b { font-weight: 700; }
+.flow span { color: var(--mute); font-size: 15px; }
+.export { background: var(--panel); border: 1px solid var(--line); border-radius: 22px; padding: 24px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; max-width: 720px; }
+.export h3 { margin: 0; font: 800 clamp(22px, 3.4vw, 32px)/1.1 var(--display); }
+.tar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; border: 0; margin: 0; padding: 0; }
+.tar legend, .f label { display: block; padding: 0; margin-bottom: 7px; font-weight: 700; font-size: 14.5px; }
+.tar label { display: grid; gap: 4px; padding: 12px; min-height: 72px; background: var(--ink); border: 2px solid var(--line); border-radius: 12px; cursor: pointer; font-size: 14px; line-height: 1.25; }
+.tar label b { font: 800 clamp(15px, 4.2vw, 18px)/1.1 var(--display); }
+.tar input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.tar label:has(input:checked) { border-color: var(--amber); }
+.tar label:has(input:focus-visible) { outline: 2px solid var(--amber); outline-offset: 3px; }
+.f input, .f textarea { display: block; width: 100%; min-height: 48px; padding: 11px 12px; background: var(--ink); color: var(--fg); font: inherit; border: 1.5px solid var(--line); border-radius: 10px; }
+.f textarea { min-height: 112px; resize: vertical; }
+.f input::placeholder, .f textarea::placeholder { color: var(--mute); }
+.f input:focus, .f textarea:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 3px rgba(255, 181, 71, .2); }
+.send { min-height: 56px; background: linear-gradient(110deg, var(--hot), #C63BFF 55%, var(--ice)); color: #fff; border: 0; border-radius: 14px; font: 600 15px/1 var(--display); cursor: pointer; transition: transform .15s; }
+.send:disabled { opacity: .6; cursor: wait; }
+.msg { margin: 0; font-weight: 700; color: var(--hot); }
+.done { display: grid; gap: 8px; padding: 24px; border: 2px solid #5BE0A0; border-radius: 22px; max-width: 720px; }
+.done b { font: 800 21px/1.2 var(--display); }
+.gone { position: absolute; left: -9999px; }
+.orAlt { margin: 0; color: var(--mute); font-size: 15px; }
+.orAlt a { color: var(--fg); font-weight: 700; }
+</style>
+</head>
+<body>
+
+
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" data-s><span class="rec"></span>MAXIM_BODYCAM</a>
+    <nav class="navlinks">
+      <a href="#works" data-s>Работы</a>
+      <a href="#prices" data-s>Цены</a>
+      <a href="#skills" data-s>Что делаю</a>
+      <a href="#tools" data-s>Инструменты</a>
+      <a href="#contact" data-s>Связь</a>
+      <button class="snd" id="snd" type="button" aria-pressed="false"><span class="bars"><i></i><i></i><i></i></span><span id="sndt">Звук</span></button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div>
+      <div class="eyebrow"><span class="rec"></span><b>Портфолио 2026</b> · монтаж · motion · 3D</div>
+      <h1><span class="l"><span>MAXIM</span></span><span class="l"><span class="out">BODYCAM</span></span></h1>
+      <p class="lead">Монтирую Reels, которые досматривают до конца. <strong>Motion-графика, 3D-вставки, обзоры техники</strong> и кинематографичные ролики про машины и дроны.</p>
+      <div class="ctas">
+        <a class="btn main" href="#prices" data-s>Заказать от 200 ₽</a>
+        <a class="btn" href="#works" data-s>Смотреть работы ↓</a>
+        <a class="btn" href="https://www.instagram.com/maxim_bodycam/" target="_blank" rel="noopener" data-s>Instagram ↗</a>
+      </div>
+    </div>
+    <div class="stage" id="stage" aria-label="3D-карусель с роликами">
+      <div class="floorwrap"><div class="floor"></div></div>
+      <div class="ring" id="ring"></div>
+      <div class="hint">↔ крути</div>
+    </div>
+  </div>
+
+  <div class="ribbons" aria-hidden="true">
+    <div class="rib b"><div class="tr" id="t2"></div><div class="tr" id="t2b"></div></div>
+    <div class="rib a"><div class="tr" id="t1"></div><div class="tr" id="t1b"></div></div>
+  </div>
+
+  <section id="works">
+    <div class="wrap">
+      <div class="sh">
+        <div><div class="eyebrow">Избранное · 5 роликов</div><h2>Работы, которые <span class="g">цепляют</span></h2></div>
+        <p>Наведи на карточку, чтобы увидеть превью. Нажми, чтобы смотреть со звуком.</p>
+      </div>
+      <div class="works" id="works-grid"></div>
+    </div>
+  </section>
+
+  <section id="prices">
+    <div class="wrap">
+      <div class="sh"><div><div class="eyebrow">Цены</div><h2>Заказать <span class="g">монтаж</span></h2></div><p>Присылаешь исходники и объясняешь, что нужно. Цена указана за один ролик, точную стоимость назову после описания задачи.</p></div>
+      <div class="scene" id="scene" role="img" aria-label="Камера, монтажный таймлайн, 3D-куб и нейросеть"><img class="bgi" src="media/l/bg.jpg" alt="" width="3840" height="2160"><div class="lay" style="--d:0.5"><img class="tw" src="media/l/spark.webp" alt="" style="left:4.271%;top:6.481%;width:90.833%"></div><div class="lay" style="--d:1.4"><img class="nf" src="media/l/net.webp" alt="" style="left:69.167%;top:0.000%;width:30.833%"></div><div class="lay" style="--d:1.8"><img class="cf" src="media/l/cube.webp" alt="" style="left:0.000%;top:1.852%;width:29.688%"></div><div class="lay" style="--d:1.5"><img class="ff" src="media/l/film.webp" alt="" style="left:0.000%;top:47.407%;width:33.021%"></div><div class="lay" style="--d:0.6"><img class="cam" src="media/l/cam.webp" alt="" style="left:23.958%;top:6.481%;width:54.167%"></div><div class="lay" style="--d:0.6"><img class="bl" src="media/l/rec.webp" alt="" style="left:64.271%;top:25.741%;width:6.458%"></div><div class="lay" style="--d:1.1"><img class="tf" src="media/l/tl.webp" alt="" style="left:20.312%;top:56.944%;width:62.083%"></div><div class="lay" style="--d:1.1"><img class="sc" src="media/l/head.webp" alt="" style="left:52.865%;top:67.407%;width:4.844%"></div><div class="lay" style="--d:1.9"><img class="pf" src="media/l/play.webp" alt="" style="left:68.958%;top:33.704%;width:25.625%"></div></div>
+      <div class="plans">
+        <article class="plan" style="--c:#2CC6C0">
+          <h3>Простой монтаж</h3>
+          <div class="price">от 200 ₽<small>за ролик</small></div>
+          <ul><li>Монтаж твоего ролика</li><li class="no">Без 3D-анимации</li><li class="no">Без нейросетей</li></ul>
+          <button class="pick" type="button" data-plan="plain">Выбрать от 200 ₽</button>
+        </article>
+        <article class="plan" style="--c:#FFB547">
+          <h3>Всё включено</h3>
+          <div class="price">от 350 ₽<small>за ролик</small></div>
+          <ul><li>Монтаж твоего ролика</li><li>3D-анимация</li><li>Нейросети</li></ul>
+          <button class="pick" type="button" data-plan="full">Выбрать от 350 ₽</button>
+        </article>
+      </div>
+      <ol class="flow">
+        <li><b>Оставь заявку</b><span>Выбери тариф и напиши, как с тобой связаться.</span></li>
+        <li><b>Пришли материалы</b><span>Дай ссылку на исходники сразу или отправь их, когда я напишу.</span></li>
+        <li><b>Получи ролик</b><span>Я смонтирую видео и пришлю готовый файл.</span></li>
+      </ol>
+      <form class="export" id="form" name="order" method="POST" action="/" data-netlify="true" netlify-honeypot="company">
+        <h3 id="order">Заявка на монтаж</h3>
+        <input type="hidden" name="form-name" value="order">
+        <p class="gone"><label>Не заполняй это поле <input id="company" name="company" tabindex="-1" autocomplete="off"></label></p>
+        <fieldset class="tar">
+          <legend>Тариф</legend>
+          <label><input id="plan-plain" type="radio" name="tariff" value="Простой монтаж, от 200 ₽"><b>от 200 ₽</b>Простой монтаж</label>
+          <label><input id="plan-full" type="radio" name="tariff" value="Всё включено, от 350 ₽" checked><b>от 350 ₽</b>С 3D и нейросетями</label>
+        </fieldset>
+        <div class="f"><label for="name">Как тебя зовут</label><input id="name" name="name" required maxlength="60" autocomplete="name"></div>
+        <div class="f"><label for="contact-field">Где тебе написать</label><input id="contact-field" name="contact" required maxlength="120" placeholder="Telegram, Instagram или телефон"></div>
+        <div class="f"><label for="link">Ссылка на исходники (если уже есть)</label><input id="link" name="link" maxlength="300" placeholder="Яндекс Диск, Google Диск или другое облако"></div>
+        <div class="f"><label for="task">Что нужно сделать</label><textarea id="task" name="task" required maxlength="1500" placeholder="Длина ролика, стиль, пример, который нравится"></textarea></div>
+        <p class="msg" id="err" role="alert" hidden></p>
+        <button class="send" id="send" type="submit">Отправить заявку</button>
+        <p class="orAlt">Удобнее в личных сообщениях? <a href="https://ig.me/m/maxim_bodycam" target="_blank" rel="noopener">Написать в Instagram</a></p>
+      </form>
+      <div class="done" id="done" role="status" hidden><b>Заявка отправлена</b><span>Я напишу по контакту, который ты указал.</span></div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="sh"><div><div class="eyebrow">Что я делаю</div><h2>Из сырых кадров в <span class="g">Reels</span></h2></div></div>
+      <div class="skills">
+        <div class="sk" style="--c:var(--hot)"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#FF3D6E" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h10M4 17h13"/><circle cx="19" cy="12" r="2"/></svg></div><h3>Монтаж Reels</h3><p>Хук в первые 3 секунды, ритм под музыку, субтитры и переходы. Вертикально 9:16.</p></div>
+        <div class="sk" style="--c:var(--ice)"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#5B8CFF" stroke-width="2" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></svg></div><h3>3D и нейросети</h3><p>3D-вставки как мотор BMW в разрезе, анимации в Seedance и Kling, сцены по промптам.</p></div>
+        <div class="sk" style="--c:var(--amber)"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#FFB547" stroke-width="2" stroke-linecap="round"><path d="M3 12c3-6 6-6 9 0s6 6 9 0"/><circle cx="12" cy="12" r="1.5" fill="#FFB547"/></svg></div><h3>Motion-графика</h3><p>Кинетический текст, иконки, интерфейсы и промо как «Вершина покоряется с DJI».</p></div>
+        <div class="sk" style="--c:#C63BFF"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#C63BFF" stroke-width="2" stroke-linecap="round"><rect x="3" y="7" width="13" height="10" rx="2"/><path d="M16 11l5-3v8l-5-3"/></svg></div><h3>Съёмка и обзоры</h3><p>Техника, гаджеты, машины. Снимаю на Canon, Pocket 3, Insta360 и с дрона.</p></div>
+      </div>
+      <div class="stats">
+        <div class="st"><div class="n" data-count="3300">0</div><div class="d">просмотров у Reels про DJI Osmo Nano</div></div>
+        <div class="st"><div class="n" data-count="4">0</div><div class="d">новых Reels каждую неделю</div></div>
+        <div class="st"><div class="n" data-count="60" data-suf=" сек">0</div><div class="d">максимум на ролик, чтобы досмотрели</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tools">
+    <div class="wrap">
+      <div class="sh"><div><div class="eyebrow">Стек</div><h2>Чем я <span class="g">работаю</span></h2></div></div>
+      <div class="tgroup"><h3>Монтаж</h3><div class="tools" data-tools="CapCut|DaVinci Resolve|VN|InShot" data-c="#FF3D6E"></div></div>
+      <div class="tgroup"><h3>Нейросети</h3><div class="tools" data-tools="Claude|ChatGPT|Seedance|Runway|Kling|Sora|Veo" data-c="#5B8CFF"></div></div>
+      <div class="tgroup"><h3>Камеры и дроны</h3><div class="tools" data-tools="DJI Avata 2|DJI Osmo Pocket 3|DJI Osmo Nano|Insta360 X5|Canon" data-c="#FFB547"></div></div>
+      <div class="tgroup"><h3>Свет и звук</h3><div class="tools" data-tools="Mic Mini 2|Lanzi|Viltrox|Magic Arm" data-c="#C63BFF"></div></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact">
+        <div class="eyebrow"><span class="rec"></span>Открыт для проектов</div>
+        <h2>Нужен Reels,<br>который <span class="g">залетит?</span></h2>
+        <p>Пиши в директ: смонтирую обзор, промо или ролик про твою машину.</p>
+        <div class="handle">
+          <a class="btn main" href="https://ig.me/m/maxim_bodycam" target="_blank" rel="noopener" data-s>Написать в Instagram ↗</a>
+          <a class="btn" href="#prices" data-s>Оставить заявку</a>
+          <code id="hdl">@maxim_bodycam</code>
+          <button class="btn" id="copy" type="button">Скопировать</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap"><span>© 2026 MAXIM_BODYCAM</span><span>Монтаж · Motion · 3D</span></footer>
+
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-label="Просмотр ролика">
+  <div class="mcap" id="mcap"></div>
+  <div class="box"><video id="mv" controls playsinline></video></div>
+  <div class="mbar"><button id="prev" type="button" aria-label="Предыдущий">‹</button><button id="next" type="button" aria-label="Следующий">›</button><button id="close" type="button" aria-label="Закрыть">✕</button></div>
+</div>
+
+<script>
+const WORKS=[
+  {id:1,title:"BMW X6 · мотор в 3D",tag:"Cinematic · 3D",dur:"0:20"},
+  {id:2,title:"Вершина покоряется с DJI",tag:"Motion-графика",dur:"0:12"},
+  {id:3,title:"Топ-5 приложений для монтажа",tag:"Обзор · Talking head",dur:"0:58"},
+  {id:4,title:"Insta360 X5: снимает всё вокруг",tag:"Обзор техники",dur:"0:34"},
+  {id:5,title:"BMW X6 · каждая деталь",tag:"Cinematic",dur:"0:46"}
+];
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- sound (Web Audio, synthesized) ---------- */
+let AC=null,soundOn=false;
+const sndBtn=document.getElementById('snd'),sndT=document.getElementById('sndt');
+function ac(){if(!AC){try{AC=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}return AC}
+function tone(f,d=.08,type='sine',v=.08,slide=0){if(!soundOn)return;const a=ac();if(!a)return;const o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.setValueAtTime(f,a.currentTime);if(slide)o.frequency.exponentialRampToValueAtTime(f*slide,a.currentTime+d);g.gain.setValueAtTime(v,a.currentTime);g.gain.exponentialRampToValueAtTime(.0001,a.currentTime+d);o.connect(g).connect(a.destination);o.start();o.stop(a.currentTime+d)}
+function whoosh(d=.45,v=.18){if(!soundOn)return;const a=ac();if(!a)return;const n=a.sampleRate*d,b=a.createBuffer(1,n,a.sampleRate),c=b.getChannelData(0);for(let i=0;i<n;i++)c[i]=(Math.random()*2-1)*(1-i/n);const s=a.createBufferSource();s.buffer=b;const f=a.createBiquadFilter();f.type='bandpass';f.Q.value=1.2;f.frequency.setValueAtTime(300,a.currentTime);f.frequency.exponentialRampToValueAtTime(4000,a.currentTime+d*.7);const g=a.createGain();g.gain.setValueAtTime(v,a.currentTime);s.connect(f).connect(g).connect(a.destination);s.start()}
+function impact(){tone(90,.35,'sine',.25,.4);tone(1200,.12,'triangle',.04,.5)}
+const hover=()=>tone(1400+Math.random()*300,.05,'sine',.035);
+sndBtn.addEventListener('click',()=>{soundOn=!soundOn;ac()?.resume?.();sndBtn.classList.toggle('on',soundOn);sndBtn.setAttribute('aria-pressed',soundOn);sndT.textContent=soundOn?'Звук вкл':'Звук';if(soundOn){tone(523,.12,'triangle',.07);setTimeout(()=>tone(784,.18,'triangle',.07),90)}});
+document.querySelectorAll('[data-s]').forEach(e=>{e.addEventListener('mouseenter',hover);e.addEventListener('click',()=>whoosh(.35,.12))});
+
+/* ---------- ribbons ---------- */
+const w1="МОНТАЖ ✦ MOTION ✦ 3D ✦ ОБЗОРЫ ✦ FPV ✦ REELS ✦ ",w2="CINEMATIC • NEURAL • 9:16 • 4K • COLOR • SOUND DESIGN • ";
+const fill=(id,s)=>{const el=document.getElementById(id);el.innerHTML=(s.repeat(3)).split(/(✦|•)/).map(x=>x==='✦'||x==='•'?`<em>${x}</em>`:`<span>${x.trim()}</span>`).join('')};
+['t1','t1b'].forEach(i=>fill(i,w1));['t2','t2b'].forEach(i=>fill(i,w2));
+
+/* ---------- 3D ring ---------- */
+const ring=document.getElementById('ring'),stage=document.getElementById('stage');
+WORKS.forEach((w,i)=>{const d=document.createElement('div');d.className='it';d.innerHTML=`<video src="media/loop${w.id}.mp4" poster="media/work${w.id}.jpg" muted loop autoplay playsinline preload="auto"></video><span>${w.tag}</span>`;d.addEventListener('click',()=>{if(!dragMoved)openW(i)});ring.appendChild(d)});
+const items=[...ring.children];
+let ang=0,vel=RM?0:.18,drag=false,lx=0,dragMoved=false,tilt=-8;
+function radius(){const cw=items[0].offsetWidth;return cw*1.12}
+function layout(){const R=radius();items.forEach((el,i)=>{const a=i*360/items.length+ang;el.style.transform=`rotateY(${a}deg) translateZ(${R}px)`;const rad=a*Math.PI/180;const front=(Math.cos(rad)+1)/2;el.style.filter=`brightness(${.35+.65*front})`;el.style.zIndex=Math.round(front*100)});ring.style.transform=`translateZ(-${R*.6}px) rotateX(${tilt}deg)`}
+let lastTick=0;
+function loop(){if(!drag){ang+=vel;vel+=(RM?0:.18-vel)*.02}const step=Math.floor(ang/72);if(step!==lastTick){lastTick=step;if(Math.abs(vel)>.6)tone(2200,.03,'square',.015)}layout();requestAnimationFrame(loop)}
+stage.addEventListener('pointerdown',e=>{drag=true;dragMoved=false;lx=e.clientX;stage.setPointerCapture(e.pointerId)});
+stage.addEventListener('pointermove',e=>{if(drag){const dx=e.clientX-lx;if(Math.abs(dx)>3)dragMoved=true;ang+=dx*.35;vel=dx*.35;lx=e.clientX}else{const r=stage.getBoundingClientRect();tilt=-8+((e.clientY-r.top)/r.height-.5)*-10}});
+stage.addEventListener('pointerup',()=>{drag=false});stage.addEventListener('pointercancel',()=>{drag=false});
+loop();
+
+/* ---------- works grid with tilt ---------- */
+const grid=document.getElementById('works-grid');
+WORKS.forEach((w,i)=>{const c=document.createElement('div');c.className='card';c.tabIndex=0;c.setAttribute('role','button');c.setAttribute('aria-label','Смотреть: '+w.title);
+  c.innerHTML=`<img src="media/work${w.id}.jpg" alt="" loading="lazy"><video src="media/loop${w.id}.mp4" muted loop playsinline preload="none"></video><div class="glare"></div><span class="dur">${w.dur}</span><div class="pl"></div><div class="meta"><div class="tag">${w.tag}</div><h3>${w.title}</h3></div>`;
+  const v=c.querySelector('video');
+  c.addEventListener('mouseenter',()=>{c.classList.add('play');v.play().catch(()=>{});hover()});
+  c.addEventListener('mouseleave',()=>{c.classList.remove('play');v.pause();c.style.transform=''});
+  c.addEventListener('mousemove',e=>{if(RM)return;const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;c.style.transform=`rotateY(${(x-.5)*18}deg) rotateX(${(.5-y)*18}deg) scale(1.03)`;c.style.setProperty('--gx',x*100+'%');c.style.setProperty('--gy',y*100+'%')});
+  c.addEventListener('click',()=>openW(i));c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openW(i)}});
+  grid.appendChild(c)});
+// on touch screens, play previews when cards are on screen
+if(matchMedia('(hover:none)').matches&&'IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(en=>{const v=en.target.querySelector('video');if(en.isIntersecting){en.target.classList.add('play');v.play().catch(()=>{})}else{en.target.classList.remove('play');v.pause()}}),{threshold:.6});grid.querySelectorAll('.card').forEach(c=>io.observe(c))}
+
+/* ---------- modal ---------- */
+const modal=document.getElementById('modal'),mv=document.getElementById('mv'),mcap=document.getElementById('mcap');let cur=0;
+function openW(i){cur=(i+WORKS.length)%WORKS.length;const w=WORKS[cur];mv.src=`media/work${w.id}.mp4`;mv.poster=`media/work${w.id}.jpg`;mcap.innerHTML=`<small>${w.tag}</small>${w.title}`;modal.hidden=false;impact();whoosh(.5,.15);mv.play().catch(()=>{});document.body.style.overflow='hidden'}
+function closeW(){mv.pause();modal.hidden=true;document.body.style.overflow='';tone(500,.12,'sine',.05,.5)}
+document.getElementById('close').onclick=closeW;document.getElementById('next').onclick=()=>openW(cur+1);document.getElementById('prev').onclick=()=>openW(cur-1);
+modal.addEventListener('click',e=>{if(e.target===modal)closeW()});
+addEventListener('keydown',e=>{if(modal.hidden)return;if(e.key==='Escape')closeW();if(e.key==='ArrowRight')openW(cur+1);if(e.key==='ArrowLeft')openW(cur-1)});
+
+/* ---------- tools ---------- */
+document.querySelectorAll('[data-tools]').forEach(g=>{g.innerHTML=g.dataset.tools.split('|').map(t=>`<span class="tool" style="--c:${g.dataset.c}"><i></i>${t}</span>`).join('');g.querySelectorAll('.tool').forEach(t=>t.addEventListener('mouseenter',()=>tone(880+Math.random()*600,.06,'triangle',.03)))});
+
+/* ---------- counters (visible at rest, count up when seen) ---------- */
+const fmt=n=>n.toLocaleString('ru-RU');
+document.querySelectorAll('[data-count]').forEach(el=>{const target=+el.dataset.count,suf=el.dataset.suf||(target>=1000?'+':'');el.textContent=fmt(target)+suf;
+  if(RM||!('IntersectionObserver' in window))return;
+  const io=new IntersectionObserver(es=>{if(!es[0].isIntersecting)return;io.disconnect();const t0=performance.now();const run=t=>{const k=Math.min(1,(t-t0)/1400),e=1-Math.pow(1-k,3);el.textContent=fmt(Math.round(target*e))+suf;if(k<1)requestAnimationFrame(run)};requestAnimationFrame(run)},{threshold:.6});io.observe(el)});
+
+/* ---------- copy ---------- */
+document.getElementById('copy').addEventListener('click',e=>{const b=e.currentTarget;navigator.clipboard?.writeText('@maxim_bodycam').then(()=>{b.textContent='Скопировано';tone(988,.1,'triangle',.06)},()=>{const r=document.createRange();r.selectNodeContents(document.getElementById('hdl'));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Выделено, жми Ctrl+C'})});
+
+/* ---------- cursor glow ---------- */
+const cu=document.getElementById('cursor');addEventListener('pointermove',e=>{cu.style.transform=`translate(${e.clientX}px,${e.clientY}px)`});
+
+/* ---------- background: drifting light orbs ---------- */
+const cv=document.getElementById('bg'),cx=cv.getContext('2d');let W,H;
+function rs(){W=cv.width=innerWidth*Math.min(devicePixelRatio,1.5)/2;H=cv.height=innerHeight*Math.min(devicePixelRatio,1.5)/2}rs();addEventListener('resize',rs);
+const orbs=[{c:'255,61,110',x:.15,y:.2,r:.55,s:.00011},{c:'91,140,255',x:.85,y:.35,r:.6,s:.00009},{c:'255,181,71',x:.5,y:.9,r:.45,s:.00013}];
+function bgLoop(t){cx.clearRect(0,0,W,H);const sy=scrollY*.0004;orbs.forEach((o,i)=>{const x=(o.x+Math.sin(t*o.s+i)*.12)*W,y=((o.y+Math.cos(t*o.s*1.3+i)*.1-sy*(i+1)*.3)%1.2)*H,r=o.r*Math.max(W,H);const g=cx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,`rgba(${o.c},.22)`);g.addColorStop(1,`rgba(${o.c},0)`);cx.fillStyle=g;cx.fillRect(0,0,W,H)});if(!RM)requestAnimationFrame(bgLoop)}
+requestAnimationFrame(bgLoop);
+
+/* ---------- заявка ---------- */
+(function(){const f=document.getElementById('form'),err=document.getElementById('err'),send=document.getElementById('send');
+document.querySelectorAll('.pick').forEach(b=>b.addEventListener('click',()=>{document.getElementById('plan-'+b.dataset.plan).checked=true;f.scrollIntoView();document.getElementById('name').focus({preventScroll:true})}));
+f.addEventListener('submit',e=>{e.preventDefault();err.hidden=true;send.disabled=true;send.textContent='Отправляю…';fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(f)).toString()}).then(r=>{if(!r.ok)throw 0;f.hidden=true;const d=document.getElementById('done');d.hidden=false;d.scrollIntoView({block:'center'})}).catch(()=>{err.textContent='Заявка не отправилась. Проверь интернет и нажми ещё раз.';err.hidden=false;send.disabled=false;send.textContent='Отправить заявку'})})})();
+</script>
+</body>
+</html>
